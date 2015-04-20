@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:title="Match history"
+        android:key="pref_hist">
+        <!-- Nombre total de matchs affichés (numberPicker) -->
+        <!-- Nombre de match par invocateur (nB) -->
+        <PreferenceScreen
+            android:title="Displayed informations"
+            android:key="pref_hist_info">
+            <CheckBoxPreference
+                android:title="Ennemy team"
+                android:summary="Informations de l'équipe ennemie"
+                android:key="pref_hist_info_ennemy"
+                android:defaultValue="true"/>
+            <PreferenceScreen
+                android:title="Map filters"
+                android:key="pref_hist_info_filt">
+                <CheckBoxPreference
+                    android:title="Summoner rift"
+                    android:key="pref_hist_info_filt_summ"
+                    android:defaultValue="true"/>
+                <CheckBoxPreference
+                    android:title="Howling abyss"
+                    android:key="pref_hist_info_filt_howl"
+                    android:defaultValue="true"/>
+                <CheckBoxPreference
+                    android:title="Dominion"
+                    android:key="pref_hist_info_filt_domi"
+                    android:defaultValue="true"/>
+                <CheckBoxPreference
+                    android:title="Evenemential"
+                    android:key="pref_hist_info_filt_even"
+                    android:defaultValue="true"/>
+            </PreferenceScreen>
+            <PreferenceScreen
+                android:title="Match details"
+                android:key="pref_hist_info_mtyp">
+                <CheckBoxPreference
+                    android:title="Map"
+                    android:summary="Carte et mode"
+                    android:key="pref_hist_info_mtyp_map"
+                    android:defaultValue="true"/>
+                <CheckBoxPreference
+                    android:title="Queue type"
+                    android:key="pref_hist_info_mtyp_queue"
+                    android:defaultValue="true"/>
+            </PreferenceScreen>
+            <PreferenceScreen
+                android:title="Team composition"
+                android:key="pref_hist_info_team">
+                <CheckBoxPreference
+                    android:title="Player KDA"
+                    android:key="pref_hist_info_team_stats"
+                    android:defaultValue="false"/>
+                <CheckBoxPreference
+                    android:title="Summoners spells"
+                    android:key="pref_hist_info_team_spells"
+                    android:defaultValue="false"/>
+                <CheckBoxPreference
+                    android:title="Highest level"
+                    android:summary="Plus haute ligue atteinte"
+                    android:key="pref_hist_info_team_level"
+                    android:defaultValue="false"/>
+            </PreferenceScreen>
+        </PreferenceScreen>
+        <PreferenceScreen
+            android:title="Team results"
+            android:key="pref_histo_stats">
+            <CheckBoxPreference
+                android:title="Tower kills"
+                android:key="pref_hist_info_stats_towers"
+                android:defaultValue="true"/>
+            <CheckBoxPreference
+                android:title="Inhibitor kills"
+                android:key="pref_hist_info_stats_inhib"
+                android:defaultValue="false"/>
+            <CheckBoxPreference
+                android:title="Drake kills"
+                android:summary="Exclusif à la Faille de l'invocateur"
+                android:key="pref_hist_info_stats_drake"
+                android:defaultValue="true"/>
+            <CheckBoxPreference
+                android:title="Baron kills"
+                android:summary="Exclusif à la Faille de l'invocateur"
+                android:key="pref_hist_info_stats_baron"
+                android:defaultValue="true"/>
+            <CheckBoxPreference
+                android:title="Vilemaw kills"
+                android:summary="Exclusif à la Forêt torturée"
+                android:key="pref_hist_info_stats_vile"
+                android:defaultValue="true"/>
+        </PreferenceScreen>
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="Summoners"
+        android:key="pref_summ">
+        <PreferenceScreen
+            android:title="Ranked stats"
+            android:key="pref_summ_rank">
+
+        </PreferenceScreen>
+        <PreferenceScreen
+            android:title="Global stats"
+            android:key="pref_sum_glob">
+
+        </PreferenceScreen>
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="Application"
+        android:key="pref_app">
+        <CheckBoxPreference
+            android:title="Notifications"
+            android:key="pref_app_notif"
+            android:defaultValue="true"/>
+        <CheckBoxPreference
+            android:title="Auto-refresh"
+            android:key="pref_app_refresh"
+            android:defaultValue="true"/>
+    </PreferenceCategory>
+</PreferenceScreen>

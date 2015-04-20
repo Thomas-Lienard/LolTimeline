@@ -1,0 +1,44 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/Black">
+
+        <ImageView
+            android:src="@drawable/ic_action_friend_add"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:scaleType="center"
+            android:background="#FFFFBB33"
+            android:layout_gravity="center_vertical|left"
+            android:contentDescription="@string/app_name" />
+
+
+        <TextView
+            android:layout_gravity="center_vertical|end"
+            android:layout_marginLeft="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Add a friend"
+            android:textColor="@color/White"/>
+
+    </LinearLayout>
+
+
+    <EditText
+        android:id="@+id/new_friend_name"
+        android:inputType="text"
+        android:layout_gravity="center_vertical|right"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginBottom="16dp"
+        android:hint="@string/summoner_name" />
+</LinearLayout>
