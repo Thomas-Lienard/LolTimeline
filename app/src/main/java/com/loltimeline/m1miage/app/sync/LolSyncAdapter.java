@@ -14,7 +14,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 
-
+import com.loltimeline.m1miage.app.R;
+import com.loltimeline.m1miage.app.data.MatchContract.MatchEntry;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -28,12 +29,9 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Vector;
 
-import com.loltimeline.m1miage.app.R;
-import com.loltimeline.m1miage.app.data.MatchContract.MatchEntry;
-
 public class LolSyncAdapter extends AbstractThreadedSyncAdapter {
     public final String LOG_TAG = LolSyncAdapter.class.getSimpleName();
-    // Interval at which to sync with the weather, in milliseconds.
+    // Interval at which to sync the matches, in milliseconds.
     // 60 seconds (1 minute) * 180 = 3 hours
     public static final int SYNC_INTERVAL = 60 * 180;
     public static final int SYNC_FLEXTIME = SYNC_INTERVAL / 3;

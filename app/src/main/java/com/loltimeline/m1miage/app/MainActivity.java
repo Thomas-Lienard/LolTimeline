@@ -15,24 +15,45 @@
  */
 package com.loltimeline.m1miage.app;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
+import android.widget.Toast;
 
-import com.loltimeline.m1miage.app.fragment.MatchDetailFragment;
-import com.loltimeline.m1miage.app.fragment.MatchListFragment;
-import com.loltimeline.m1miage.app.sync.LolSyncAdapter;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.loltimeline.m1miage.app.adapter.FriendListAdapter;
+import com.loltimeline.m1miage.app.adapter.MatchListAdapter;
+import com.loltimeline.m1miage.app.data.DatabaseHandler;
+import com.loltimeline.m1miage.app.data.Match;
+import com.loltimeline.m1miage.app.data.Summoner;
+import com.loltimeline.m1miage.app.volley.AppController;
+
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
-public class MainActivity extends ActionBarActivity implements MatchListFragment.Callback {
+public class MainActivity extends ActionBarActivity {
 
-    private final String LOG_TAG = MainActivity.class.getSimpleName();
+    private final String TAG = MainActivity.class.getSimpleName();
 
     private boolean mTwoPane;
+    private List<Summoner> summonerList;
+    private List<Match> matchList;
+    private ListView listView;
+    private MatchListAdapter listAdapter;
+    protected DatabaseHandler db = new DatabaseHandler(this);
 
-    @Override
+   /* @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -58,7 +79,67 @@ public class MainActivity extends ActionBarActivity implements MatchListFragment
 
         LolSyncAdapter.initializeSyncAdapter(this);
 
+    }*/
+
+
+
+   @Override
+    protected void onCreate(Bundle savedInstanceState) {
+       super.onCreate(savedInstanceState);
+       setContentView(R.layout.fragment_match_list);
+   }
+
+    protected void onResume() {
+        super.onResume();
+        listView = (ListView) findViewById(R.id.listview_match);
+
+        getAllMatch();
+
+        matchList = new ArrayList<Match>();
+        matchList = db.getAllMatchs();
+
+        listAdapter = new MatchListAdapter(this, matchList);
+        listView.setAdapter(listAdapter);
+        listAdapter.notifyDataSetChanged();
+
     }
+
+    public Activity getActivity(){
+        return this.getActivity();
+    }
+
+    private void getAllMatch(){
+        summonerList = db.getAllSummoners();
+
+        for (int i=0; i<summonerList.size(); i++){
+            String URL = Utility.getHistoryUrlBySummonerId(summonerList.get(i).getSummonerId());
+            JsonObjectRequest jsObjRequest = new JsonObjectRequest
+                    (Request.Method.GET, URL, null, new Response.Listener<JSONObject>() {
+
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            Log.d(TAG, response.toString());
+
+                            List<Match> matches = Utility.parseJsonHistory(response);
+                            for (int j=0; j<matches.size() ; j++){
+                                db.addMatch(matches.get(j));
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Log.d(TAG, error.toString());
+                            Toast.makeText(getApplicationContext(), "Ce match n'existe pas", Toast.LENGTH_LONG).show();
+
+                        }
+                    });
+            // Access the RequestQueue through your singleton class.
+            AppController.getInstance().addToRequestQueue(jsObjRequest);
+        }
+
+    }
+
 
 
     @Override
@@ -74,11 +155,7 @@ public class MainActivity extends ActionBarActivity implements MatchListFragment
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            startActivity(new Intent(this, SettingsActivity.class));
-            return true;
-        }
-        if (id == R.id.action_friends_add) {
+        if (id == R.id.action_friends) {
             startActivity(new Intent(this, FriendsActivity.class));
             return true;
         }
@@ -86,7 +163,7 @@ public class MainActivity extends ActionBarActivity implements MatchListFragment
     }
 
 
-    @Override
+   /* @Override
     public void onItemSelected(String date) {
         if (mTwoPane) {
             // In two-pane mode, show the detail view in this activity by
@@ -106,5 +183,5 @@ public class MainActivity extends ActionBarActivity implements MatchListFragment
                     .putExtra(MatchDetailActivity.DATE_KEY, date);
             startActivity(intent);
         }
-    }
+    }*/
 }

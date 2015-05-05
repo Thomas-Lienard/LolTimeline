@@ -18,7 +18,7 @@
     <!-- Menu label to fetch updated weather info from the server -->
     <string name="action_refresh" translatable="false">Refresh</string>
 
-    <string name="title_activity_detail">Details</string>
+    <string name="title_activity_detail">Match Details</string>
     <string name="title_activity_settings">Settings</string>
 
     <!-- Label for the location preference [CHAR LIMIT=30] -->
@@ -100,7 +100,7 @@
         <xliff:g id="low">%4$s</xliff:g></string>
 
     <!-- SyncAdapter related -->
-    <string name="sync_account_type">sunshine.example.com</string>
+    <string name="sync_account_type">m1miage.loltimeline.com</string>
     <string name="content_authority">com.loltimeline.m1miage.app</string>
 
     <!-- Notification Format -->

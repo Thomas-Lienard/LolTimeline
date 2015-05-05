@@ -1,87 +1,96 @@
 package com.loltimeline.m1miage.app.adapter;
 
+import android.app.Activity;
 import android.content.Context;
-import android.database.Cursor;
-import android.support.v4.widget.CursorAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
-import com.loltimeline.m1miage.app.FriendsActivity;
 import com.loltimeline.m1miage.app.R;
+import com.loltimeline.m1miage.app.Utility;
+import com.loltimeline.m1miage.app.data.DatabaseHandler;
+import com.loltimeline.m1miage.app.data.Summoner;
 import com.loltimeline.m1miage.app.volley.AppController;
 
-public class FriendListAdapter extends CursorAdapter {
+import java.util.List;
 
+
+/**
+ * Created by Thomas on 04/04/2015.
+ */
+public class FriendListAdapter extends BaseAdapter {
+    private Activity activity;
+    private LayoutInflater inflater;
+    private List<Summoner> summoners;
     ImageLoader imageLoader = AppController.getInstance().getImageLoader();
 
-    /**
-     * Cache of the children views for a forecast list item.
-     */
-    public static class ViewHolder {
-        public final NetworkImageView icon;
-        public final TextView name;
-        public final TextView id;
-        public final TextView lvl;
-        public final ImageButton delete;
-
-        public ViewHolder(View view) {
-            name = (TextView) view.findViewById(R.id.summoner_name);
-            id = (TextView) view.findViewById(R.id.summoner_id);
-            lvl = (TextView) view.findViewById(R.id.summoner_lvl);
-            icon = (NetworkImageView) view
-                    .findViewById(R.id.summoner_icon);
-            delete = (ImageButton) view.findViewById(R.id.delete);
-        }
-    }
-
-    public FriendListAdapter(Context context, Cursor c, int flags) {
-        super(context, c, flags);
+    public FriendListAdapter(Activity activity, List<Summoner> summoners) {
+        this.activity = activity;
+        this.summoners = summoners;
     }
 
     @Override
-    public View newView(Context context, Cursor cursor, ViewGroup parent) {
-        View view = LayoutInflater.from(context).inflate(R.layout.friend, parent, false);
-        ViewHolder viewHolder = new ViewHolder(view);
-        view.setTag(viewHolder);
-
-
-        return view;
+    public int getCount() {
+        return summoners.size();
     }
 
     @Override
-    public void bindView(View view, Context context, Cursor cursor) {
+    public Object getItem(int location) {
+        return summoners.get(location);
+    }
 
-        ViewHolder viewHolder = (ViewHolder) view.getTag();
-        if (imageLoader == null)
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+
+        if (inflater == null)
+            inflater = (LayoutInflater) activity
+                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        if (convertView == null)
+            convertView = inflater.inflate(R.layout.friend, null);
+      if (imageLoader == null)
             imageLoader = AppController.getInstance().getImageLoader();
 
-        String name = cursor.getString(FriendsActivity.COL_NAME);
-        viewHolder.name.setText(name);
 
-        String id = cursor.getString(FriendsActivity.COL_SUMMONER_ID);
-        viewHolder.id.setText(id);
+        TextView name = (TextView) convertView.findViewById(R.id.summoner_name);
+        TextView id = (TextView) convertView.findViewById(R.id.summoner_id);
+        TextView lvl = (TextView) convertView.findViewById(R.id.summoner_lvl);
+        NetworkImageView icon = (NetworkImageView) convertView
+                .findViewById(R.id.summoner_icon);
+        ImageButton delete = (ImageButton) convertView.findViewById(R.id.delete);
+        final Summoner summoner = summoners.get(position);
 
-        String lvl = cursor.getString(FriendsActivity.COL_LEVEL);
-        viewHolder.lvl.setText(lvl);
+        // On rempli les champs text
+        id.setText(String.valueOf(summoner.getSummonerId()));
+        name.setText(summoner.getName());
+        lvl.setText(String.valueOf(summoner.getLvl()));
 
-        String icon = cursor.getString(FriendsActivity.COL_ICON);
-        viewHolder.icon.setDefaultImageResId(R.drawable.ic_action_android);
-        viewHolder.icon.setImageUrl(icon, imageLoader);
+        // On put l'icone summoner
+       icon.setImageUrl(Utility.getSummonerIconUrlbyId(summoner.getIcon()), imageLoader);
+
 
         // On active le bouton delete friend
-        viewHolder.delete.setOnClickListener(new View.OnClickListener() {
+        delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                DatabaseHandler db = new DatabaseHandler(activity);
+                //db.deleteAllMatchSummoner(summoner);
+                db.deleteSummoner(summoner);
+
+                activity.recreate();
             }
         });
 
 
+        return convertView;
     }
-
-
 }

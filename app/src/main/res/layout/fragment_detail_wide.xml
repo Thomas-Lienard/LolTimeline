@@ -8,13 +8,13 @@
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:orientation="horizontal"
-        android:padding="16dp" >
+        android:padding="16dp">
 
         <LinearLayout
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:minWidth="56dp"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <!-- Header: Day, Date -->
             <TextView
@@ -30,7 +30,7 @@
                 android:id="@+id/detail_date_textview"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
-                android:textColor="@color/grey_700"
+                android:textColor="@color/Grey"
                 android:textSize="20sp" />
 
         </LinearLayout>
@@ -54,8 +54,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_width="wrap_content"
-                android:textColor="@color/grey_700"
-                android:textSize="48sp" />
+                android:textColor="@color/Grey"                android:textSize="48sp" />
 
             <!-- Humidity, wind, pressure -->
             <TextView
@@ -100,8 +99,7 @@
                 android:id="@+id/detail_forecast_textview"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
-                android:textColor="@color/grey_700"
-                android:textAppearance="?android:textAppearanceLarge"/>
+                android:textColor="@color/Grey"                android:textAppearance="?android:textAppearanceLarge" />
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

@@ -1,98 +1,95 @@
 package com.loltimeline.m1miage.app.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
 import android.support.v4.widget.CursorAdapter;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.NetworkImageView;
 import com.loltimeline.m1miage.app.R;
-import com.loltimeline.m1miage.app.fragment.MatchListFragment;
+import com.loltimeline.m1miage.app.Utility;
+import com.loltimeline.m1miage.app.data.Match;
 import com.loltimeline.m1miage.app.volley.AppController;
 
-/**
- * {@link MatchListAdapter} exposes a list of weather forecasts
- * from a {@link Cursor} to a {@link android.widget.ListView}.
- */
-public class MatchListAdapter extends CursorAdapter {
-    ImageLoader imageLoader = null;
-
-    /**
-     * Cache of the children views for a forecast list item.
-     */
-    public static class ViewHolder {
-        public final ImageView icon;
-        public final TextView name;
-        public final TextView winner;
-        public final TextView map;
-        public final TextView queue;
-        public final TextView kda;
-        public final TextView date;
-        public final TextView duration;
+import java.util.List;
 
 
-        public ViewHolder(View view) {
+public class MatchListAdapter extends BaseAdapter {
 
-            icon = (ImageView) view.findViewById(R.id.match_champ_icon);
-            name = (TextView) view.findViewById(R.id.text_name);
-            winner = (TextView) view.findViewById(R.id.text_winner);
-            map = (TextView) view.findViewById(R.id.text_map);
-            queue = (TextView) view.findViewById(R.id.text_queue);
-            kda = (TextView) view.findViewById(R.id.text_kda);
-            date = (TextView) view.findViewById(R.id.text_date);
-            duration = (TextView) view.findViewById(R.id.text_duration);
-        }
-    }
 
-    public MatchListAdapter(Context context, Cursor c, int flags) {
-        super(context, c, flags);
+    private Activity activity;
+    private LayoutInflater inflater;
+    private List<Match> matchList;
+    ImageLoader imageLoader = AppController.getInstance().getImageLoader();
+
+    public MatchListAdapter(Activity activity, List<Match> matchList) {
+        this.activity = activity;
+        this.matchList = matchList;
     }
 
     @Override
-    public View newView(Context context, Cursor cursor, ViewGroup parent) {
-
-
-        View view = LayoutInflater.from(context).inflate(R.layout.fragment_match_detail, parent, false);
-
-        ViewHolder viewHolder = new ViewHolder(view);
-        view.setTag(viewHolder);
-
-        return view;
+    public int getCount() {
+        return matchList.size();
     }
 
     @Override
-    public void bindView(View view, Context context, Cursor cursor) {
+    public Object getItem(int location) {
+        return matchList.get(location);
+    }
 
-        ViewHolder viewHolder = (ViewHolder) view.getTag();
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
 
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+
+        if (inflater == null)
+            inflater = (LayoutInflater) activity
+                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        if (convertView == null)
+            convertView = inflater.inflate(R.layout.fragment_match, null);
         if (imageLoader == null)
             imageLoader = AppController.getInstance().getImageLoader();
 
-        String name = cursor.getString(MatchListFragment.COL_SUMMONER_NAME);
-        viewHolder.name.setText(name);
+        NetworkImageView champion_icon = (NetworkImageView) convertView
+                .findViewById(R.id.match_champ_icon);
 
-        String winner = cursor.getString(MatchListFragment.COL_WINNER);
-        viewHolder.winner.setText(winner);
+        TextView kda = (TextView) convertView.findViewById(R.id.text_kda);
+        TextView winner = (TextView) convertView.findViewById(R.id.text_winner);
+        TextView map = (TextView) convertView.findViewById(R.id.text_map);
+        TextView queue = (TextView) convertView.findViewById(R.id.text_queue);
+        TextView date = (TextView) convertView.findViewById(R.id.text_date);
+        TextView duration = (TextView) convertView.findViewById(R.id.text_duration);
 
-        String map = cursor.getString(MatchListFragment.COL_MAP_ID);
-        viewHolder.map.setText(map);
+        final Match match = matchList.get(position);
 
-        String kda = cursor.getString(MatchListFragment.COL_KILLS).concat("/").concat(cursor.getString(MatchListFragment.COL_DEATHS)).concat("/").concat(cursor.getString(MatchListFragment.COL_ASSISTS));
-        viewHolder.kda.setText(kda);
+        // On rempli les champs text
+        champion_icon.setImageUrl(Utility.getChampionImageUriById(match.getChampion_id()), imageLoader);
+        kda.setText(match.getKILLS() + "/" + match.getDEATHS() + "/" + match.getASSISTS());
+        Log.d("kda", match.getKILLS() + "/" + match.getDEATHS() + "/" + match.getASSISTS());
+        winner.setText(match.getWinner());
+        Log.d("winner", match.getWinner());
+        map.setText(String.valueOf(match.getMap_id()));
+        queue.setText(match.getQueue_type());
+        date.setText(String.valueOf(match.getMatch_creation()));
+        duration.setText(String.valueOf(match.getMatch_duration()));
 
-        String queue = cursor.getString(MatchListFragment.COL_QUEUE_TYPE);
-        viewHolder.queue.setText(queue);
 
-        String date = cursor.getString(MatchListFragment.COL_MATCH_CREATION);
-        viewHolder.date.setText(date);
 
-        String duration = cursor.getString(MatchListFragment.COL_MATCH_DURATION);
-        viewHolder.duration.setText(duration);
+
+
+        return convertView;
     }
-
 
 }

@@ -33,7 +33,6 @@ import android.widget.TextView;
 import com.loltimeline.m1miage.app.MatchDetailActivity;
 import com.loltimeline.m1miage.app.R;
 import com.loltimeline.m1miage.app.data.MatchContract.MatchEntry;
-import com.loltimeline.m1miage.app.data.MatchContract.SummonerEntry;
 
 /**
  * A placeholder fragment containing a simple view.

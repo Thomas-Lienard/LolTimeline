@@ -12,7 +12,8 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
+ *//*
+
 package com.loltimeline.m1miage.app.fragment;
 
 import android.content.Intent;
@@ -41,9 +42,11 @@ import com.loltimeline.m1miage.app.data.MatchContract.MatchEntry;
 import com.loltimeline.m1miage.app.data.MatchContract.SummonerEntry;
 import com.loltimeline.m1miage.app.sync.LolSyncAdapter;
 
+*/
 /**
  * Encapsulates fetching the forecast and displaying it as a {@link android.widget.ListView} layout.
- */
+ *//*
+
 public class MatchListFragment extends Fragment implements LoaderCallbacks<Cursor> {
     public static final String LOG_TAG = MatchListFragment.class.getSimpleName();
     private MatchListAdapter mMatchListAdapter;
@@ -94,15 +97,19 @@ public class MatchListFragment extends Fragment implements LoaderCallbacks<Curso
     public static final int COL_MAP_ID = 10;
 
 
-    /**
+    */
+/**
      * A callback interface that all activities containing this fragment must
      * implement. This mechanism allows activities to be notified of item
      * selections.
-     */
+     *//*
+
     public interface Callback {
-        /**
+        */
+/**
          * DetailFragmentCallback for when an item has been selected.
-         */
+         *//*
+
         public void onItemSelected(String date);
     }
 
@@ -247,3 +254,4 @@ public class MatchListFragment extends Fragment implements LoaderCallbacks<Curso
 
 
 }
+*/
