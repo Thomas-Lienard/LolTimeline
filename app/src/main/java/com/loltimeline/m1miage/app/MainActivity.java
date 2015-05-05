@@ -52,6 +52,7 @@ public class MainActivity extends ActionBarActivity {
     private ListView listView;
     private MatchListAdapter listAdapter;
     protected DatabaseHandler db = new DatabaseHandler(this);
+    private int i;
 
    /* @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,6 +103,7 @@ public class MainActivity extends ActionBarActivity {
         listView.setAdapter(listAdapter);
         listAdapter.notifyDataSetChanged();
 
+
     }
 
     public Activity getActivity(){
@@ -109,9 +111,10 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private void getAllMatch(){
+
         summonerList = db.getAllSummoners();
 
-        for (int i=0; i<summonerList.size(); i++){
+        for (i=0; i<summonerList.size(); i++){
             String URL = Utility.getHistoryUrlBySummonerId(summonerList.get(i).getSummonerId());
             JsonObjectRequest jsObjRequest = new JsonObjectRequest
                     (Request.Method.GET, URL, null, new Response.Listener<JSONObject>() {

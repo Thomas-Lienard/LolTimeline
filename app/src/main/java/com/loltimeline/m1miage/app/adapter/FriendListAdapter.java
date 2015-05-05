@@ -83,7 +83,7 @@ public class FriendListAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 DatabaseHandler db = new DatabaseHandler(activity);
-                //db.deleteAllMatchSummoner(summoner);
+                db.deleteAllMatchSummoner(summoner);
                 db.deleteSummoner(summoner);
 
                 activity.recreate();

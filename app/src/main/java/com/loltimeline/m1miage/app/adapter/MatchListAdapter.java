@@ -71,6 +71,7 @@ public class MatchListAdapter extends BaseAdapter {
         TextView queue = (TextView) convertView.findViewById(R.id.text_queue);
         TextView date = (TextView) convertView.findViewById(R.id.text_date);
         TextView duration = (TextView) convertView.findViewById(R.id.text_duration);
+        TextView name = (TextView) convertView.findViewById(R.id.text_name);
 
         final Match match = matchList.get(position);
 
@@ -80,10 +81,11 @@ public class MatchListAdapter extends BaseAdapter {
         Log.d("kda", match.getKILLS() + "/" + match.getDEATHS() + "/" + match.getASSISTS());
         winner.setText(match.getWinner());
         Log.d("winner", match.getWinner());
-        map.setText(String.valueOf(match.getMap_id()));
+        map.setText(Utility.getMapNameById(match.getMap_id()));
         queue.setText(match.getQueue_type());
         date.setText(String.valueOf(match.getMatch_creation()));
         duration.setText(String.valueOf(match.getMatch_duration()));
+        name.setText(match.getSummoner_name());
 
 
 

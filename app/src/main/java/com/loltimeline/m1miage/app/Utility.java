@@ -253,7 +253,21 @@ public class Utility {
                     match.setWinner(winner);
 
 
+
+
                 }
+
+                JSONArray entitiesArray = matchJson.getJSONArray("participantIdentities");
+                for (int j = 0; j < entitiesArray.length(); j++) {
+                    JSONObject entitiesJson = entitiesArray.getJSONObject(j);
+                    JSONObject playerJson = entitiesJson.getJSONObject("player");
+                    Long summoner_id = playerJson.getLong("summonerId");
+                    match.setSummoner_id(summoner_id);
+                    String summoner_name = playerJson.getString("summonerName");
+                    match.setSummoner_name(summoner_name);
+
+                }
+
                 matchList.add(match);
                 Log.d("UTILITY", match.toString());
 

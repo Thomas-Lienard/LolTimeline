@@ -46,6 +46,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String KEY_ASSISTS = "assists";
     private static final String KEY_SPELL1_ID = "spell1_id";
     private static final String KEY_SPELL2_ID = "spell2_id";
+    private static final String KEY_SUMMONER_ID = "summonerId" ;
+    private static final String KEY_SUMMONER_NAME = "summonerName" ;
 
     public DatabaseHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -70,9 +72,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 KEY_DEATHS + " TEXT NOT NULL," +
                 KEY_ASSISTS + " TEXT NOT NULL," +
                 KEY_SPELL1_ID + " INTEGER NOT NULL," +
-                KEY_SPELL2_ID + " INTEGER NOT NULL" +
-               /* " FOREIGN KEY (" + KEY_SUMMONER_ID + ") REFERENCES " +
-                TABLE_SUMMONERS + " (" + KEY_SUMMONERID + "), " +*/
+                KEY_SPELL2_ID + " INTEGER NOT NULL," +
+                KEY_SUMMONER_ID + " INTEGER NOT NULL," +
+                KEY_SUMMONER_NAME + " TEXT NOT NULL" +
                 " );";
         db.execSQL(CREATE_TABLE_MATCH);
 
@@ -205,6 +207,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_MATCH_DURATION, match.getMatch_duration());
         values.put(KEY_SPELL1_ID, match.getSpelle1_id());
         values.put(KEY_SPELL2_ID, match.getSpell2_id());
+        values.put(KEY_SUMMONER_ID, match.getSummoner_id());
+        values.put(KEY_SUMMONER_NAME, match.getSummoner_name());
 
         // Inserting Row
         db.insert(TABLE_MATCHES, null, values);
@@ -251,6 +255,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 match.setASSISTS(Long.parseLong(cursor.getString(9)));
                 match.setSpelle1_id(Integer.parseInt(cursor.getString(10)));
                 match.setSpell2_id(Integer.parseInt(cursor.getString(11)));
+                match.setSummoner_id(Integer.parseInt(cursor.getString(12)));
+                match.setSummoner_name(cursor.getString(13));
+
                 // Adding Match to list
                 matchesList.add(match);
             } while (cursor.moveToNext());
@@ -277,7 +284,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     // Deleting all match for a summoner
     public void deleteAllMatchSummoner(Summoner summoner) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("delete from " + TABLE_MATCHES + " WHERE " + KEY_SUMMONERID + " = " + summoner.getSummonerId());
+        db.execSQL("delete from " + TABLE_MATCHES + " WHERE " + KEY_SUMMONER_ID + " = " + summoner.getSummonerId());
         db.close();
     }
 

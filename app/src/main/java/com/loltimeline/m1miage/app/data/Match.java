@@ -21,12 +21,14 @@ public class Match {
     private long DEATHS;
     private long ASSISTS;
 
+    private long summoner_id;
+    private String summoner_name;
+
     public Match() {
     }
 
-    public Match(long matchId, String winner, int map_id, String queue_type, long match_creation, long match_duration, int champion_id, int spelle1_id, int spell2_id, long KILLS, long DEATHS, long ASSISTS) {
+    public Match(long matchId, String winner, int map_id, String queue_type, long match_creation, long match_duration, int champion_id, int spelle1_id, int spell2_id, long KILLS, long DEATHS, long ASSISTS, long summoner_id, String summoner_name) {
         this.matchId = matchId;
-        //this.summonerId = summonerId;
         this.winner = winner;
         this.map_id = map_id;
         this.queue_type = queue_type;
@@ -38,6 +40,8 @@ public class Match {
         this.KILLS = KILLS;
         this.DEATHS = DEATHS;
         this.ASSISTS = ASSISTS;
+        this.summoner_id = summoner_id;
+        this.summoner_name = summoner_name;
     }
 
     public long getMatchId() {
@@ -47,14 +51,6 @@ public class Match {
     public void setMatchId(long matchId) {
         this.matchId = matchId;
     }
-
-   /* public long getSummonerId() {
-        return summonerId;
-    }
-
-    public void setSummonerId(long summonerId) {
-        this.summonerId = summonerId;
-    }*/
 
     public String getWinner() {
         return winner;
@@ -142,5 +138,21 @@ public class Match {
 
     public void setASSISTS(long ASSISTS) {
         this.ASSISTS = ASSISTS;
+    }
+
+    public long getSummoner_id() {
+        return summoner_id;
+    }
+
+    public void setSummoner_id(long summoner_id) {
+        this.summoner_id = summoner_id;
+    }
+
+    public String getSummoner_name() {
+        return summoner_name;
+    }
+
+    public void setSummoner_name(String summoner_name) {
+        this.summoner_name = summoner_name;
     }
 }
